@@ -1,0 +1,866 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+ <meta charset="UTF-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <title>Military Clans</title>
+ <link href="https://fonts.googleapis.com/css?family=Exo:400,700" rel="stylesheet">
+ <style>
+  * {
+   margin: 0;
+   padding: 0;
+  }
+
+  body, html {
+   height: 100%; 
+   margin: 0;
+   padding: 0;
+  }
+
+  body {
+   font-family: 'Exo', sans-serif;
+   background-color: #161717;
+   color: white;
+   position: relative; 
+  }
+
+  .container {
+   width: cover;
+   margin: 0 auto;
+  }
+
+  header {
+   text-align: center;
+   padding: 60px 0;
+   background: linear-gradient(135deg, #4d4c36, #b29a7e);
+   color: white;
+   border-radius: 15px;
+   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+   position: relative;
+   overflow: hidden;
+   z-index: 1;
+  }
+
+  h1 {
+   font-size: 3.5rem;
+   margin: 0;
+   text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+  }
+
+  h2 {
+   font-size: 2rem;
+   margin: 10px 0;
+  }
+
+  h3 {
+   font-size: 1.2rem;
+   margin: 10px 0;
+   font-weight: normal;
+  }
+
+  nav {
+   margin: 20px 0;
+   display: flex;
+   flex-direction: row;
+   justify-content: center;
+   position: relative;
+   z-index: 2;
+  }
+
+  nav a {
+   color: white;
+   text-decoration: none;
+   margin: 0 10px;
+   font-weight: bold;
+   transition: color 0.3s;
+   font-size: 110%;
+  }
+
+  nav a:hover {
+   color: #333;
+  }
+
+  .fade-in {
+   opacity: 0;
+   transform: translateY(20px);
+   transition: opacity 0.5s ease, transform 0.5s ease;
+  }
+
+  .fade-in.visible {
+   opacity: 1;
+   transform: translateY(0);
+  }
+
+  .circles {
+   position: absolute;
+   top: 0;
+   left: 0;
+   width: 100%;
+   height: 100%;
+   overflow: hidden;
+   z-index: 1;
+   pointer-events: none;
+  }
+
+  .circles li {
+   position: absolute;
+   display: block;
+   list-style: none;
+   width: 30px;
+   height: 30px;
+   background: rgba(255, 255, 255, 0.2);
+   animation: animate 25s linear infinite;
+   top: 100%;
+  }
+
+  .circles li:nth-child(1) {
+   left: 25%;
+   width: 35px;
+   height: 35px;
+   animation-delay: 0s;
+  }
+
+  .circles li:nth-child(2) {
+   left: 10%;
+   width: 25px;
+   height: 25px;
+   animation-delay: 2s;
+   animation-duration: 10s;
+  }
+
+  .circles li:nth-child(3) {
+   left: 70%;
+   width: 20px;
+   height: 20px;
+   animation-delay: 4s;
+  }
+
+  .circles li:nth-child(4) {
+   left: 40%;
+   width: 30px;
+   height: 30px;
+   animation-delay: 0s;
+   animation-duration: 13s;
+  }
+
+  .circles li:nth-child(5) {
+   left: 65%;
+   width: 20px;
+   height: 20px;
+   animation-delay: 0s;
+  }
+
+  .circles li:nth-child(6) {
+   left: 75%;
+   width: 30px;
+   height: 30px;
+   animation-delay: 5s;
+  }
+
+  .circles li:nth-child(7) {
+   left: 35%;
+   width: 20px;
+   height: 20px;
+   animation-delay: 7s;
+  }
+
+  .circles li:nth-child(8) {
+   left: 50%;
+   width: 65px;
+   height: 65px;
+   animation-delay: 15s;
+   animation-duration: 35s;
+  }
+
+  .circles li:nth-child(9) {
+   left: 20%;
+   width: 35px;
+   height: 35px;
+   animation-delay: 2s;
+   animation-duration: 25s;
+  }
+
+  .circles li:nth-child(10) {
+   left: 85%;
+   width: 50px;
+   height: 50px;
+   animation-delay: 0s;
+   animation-duration: 10s;
+  }
+
+  @keyframes animate {
+   0% {
+	transform: translateY(0) rotate(0deg);
+	opacity: 1;
+	border-radius: 0;
+   }
+   100% {
+	transform: translateY(-1000px) rotate(720deg);
+	opacity: 0;
+	border-radius: 50%;
+   }
+  }
+
+  .geninfo {
+   background-color: #161717;
+   width: 100%;
+   height: 8vh;
+   color: azure;
+   text-decoration: none;
+   font-family: sans-serif;
+  }
+
+  .page {
+   display: none;
+   padding: 20px;
+   color: white;
+  }
+
+  .active {
+   display: block;
+  }
+  
+  .video-background {
+	position: fixed;
+	right: 0;
+	bottom: 0;
+	min-width: 100%;
+	min-height: 100%;
+	width: auto;
+	height: auto;
+	z-index: -1000;
+	overflow: hidden;
+  }
+
+  #myVideo {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	min-width: 100%;
+	min-height: 100%;
+	width: auto;
+	height: auto;
+	z-index: -1000;
+	transform: translateX(-50%) translateY(-50%);
+  }
+
+  .content {
+	position: relative;
+	z-index: 1;
+  }
+
+  .impinfo-container {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 10px;
+	margin: 20px auto;
+	width: 100%;
+	max-width: 900px;
+  }
+
+  form {
+	width: 100%;
+	display: flex;
+	justify-content: center;
+  }
+
+  .impinfo {
+	width: 100%;
+	height: 7vh;
+	border-color: #6b654d;
+	border-radius: 5px;
+	background-color: #0f0f0f;
+	color: white;
+	transition: background-color 0.3s;
+  }
+
+  .impinfo:hover {
+	background-color: #21211f;
+  }
+
+  .raindrop {
+	position: fixed;
+	width: 2px;
+	height: 15px;
+	background: rgba(255, 255, 255, 0.5);
+	opacity: 0.8;
+	animation: fall linear infinite;
+	pointer-events: none;
+  }
+
+  @keyframes fall {
+	to {
+	  transform: translateY(100vh);
+	  opacity: 0;
+	}
+  }
+
+  .text-container {
+	background-color: rgba(22, 23, 23, 0.8);
+	border-radius: 10px;
+	padding: 20px;
+	margin: 20px auto;
+	max-width: 900px;
+	box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  }
+
+  .paragraph {
+	margin-bottom: 20px;
+	opacity: 0;
+	transform: translateY(30px);
+	transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+
+  .paragraph.visible {
+	opacity: 1;
+	transform: translateY(0);
+  }
+
+  .rules-list {
+	list-style-type: none;
+	padding: 0;
+  }
+
+  .rules-list li {
+	margin-bottom: 15px;
+	padding: 15px;
+	background-color: rgba(30, 30, 30, 0.7);
+	border-radius: 5px;
+	opacity: 0;
+	transform: translateY(30px);
+	transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+
+  .rules-list li.visible {
+	opacity: 1;
+	transform: translateY(0);
+  }
+
+  .guide-text {
+	text-align: center;
+	font-size: 1.3rem;
+	margin: 20px auto;
+	max-width: 800px;
+	line-height: 1.6;
+  }
+  
+  .guide-text span {
+	background: linear-gradient(135deg, #4d4c36, #b29a7e);
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+	font-weight: bold;
+  }
+  
+  .clans-container {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	gap: 20px;
+	margin: 30px auto;
+	max-width: 1200px;
+  }
+  
+  .clan-card {
+	background-color: rgba(30, 30, 30, 0.7);
+	border-radius: 10px;
+	padding: 20px;
+	width: 350px;
+	box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+	transition: transform 0.3s;
+  }
+  
+  .clan-card:hover {
+	transform: translateY(-5px);
+  }
+  
+  .clan-name {
+	font-size: 1.5rem;
+	margin-bottom: 10px;
+	color: #b29a7e;
+	text-align: center;
+  }
+  
+  .clan-info {
+	margin-bottom: 10px;
+  }
+  
+  .clan-leader {
+	font-style: italic;
+	color: #aaa;
+  }
+  
+  .impinfo-container1 {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 10px;
+	margin: 20px auto;
+	padding: 15px 30px;
+  }
+  
+  /* Стили для карты */
+  .map-container {
+    position: relative;
+    width: 100%;
+    max-width: 900px;
+    margin: 30px auto;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    border: 2px solid #b29a7e;
+  }
+  
+  .map-image {
+    width: 100%;
+    height: auto;
+    display: block;
+    transition: transform 0.5s ease;
+  }
+  
+  .map-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to bottom, rgba(22, 23, 23, 0.1), rgba(22, 23, 23, 0.3));
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+  
+  .map-container:hover .map-overlay {
+    opacity: 1;
+  }
+  
+  .map-container:hover .map-image {
+    transform: scale(1.02);
+  }
+  
+  .map-title {
+    color: white;
+    font-size: 2rem;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.8);
+    background: rgba(78, 76, 54, 0.7);
+    padding: 10px 20px;
+    border-radius: 5px;
+  }
+  
+  /* Адаптивные стили для карты */
+  @media (max-width: 768px) {
+    .map-container {
+      border-radius: 5px;
+      border-width: 1px;
+    }
+    
+    .map-title {
+      font-size: 1.5rem;
+      padding: 8px 15px;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .map-title {
+      font-size: 1.2rem;
+      padding: 5px 10px;
+    }
+  }
+
+  .content {
+  position: relative;
+  z-index: 2; /* Выше чем видео (если оно есть) */
+  background-color: rgba(22, 23, 23, 0.8); /* Полупрозрачный фон для читаемости */
+}
+ </style>
+</head>
+<body>
+<div class="video-background">
+  <video autoplay muted loop id="myVideo">
+	<source src="https://pin.it/6RWrdmo1E" type="video/mp4">
+  </video>
+</div>
+<div class="content">
+  <!-- Контент страницы -->
+</div>
+<div class="geninfo">
+<nav>
+  <a href="#" onclick="showPage('home')">Главная</a>
+  <a href="#" onclick="showPage('commands')">Правила</a>
+  <a href="#" onclick="showPage('donate')">Моды</a>
+  <a href="#" onclick="showPage('clans')">Кланы</a>
+</nav>
+</div>
+<div id="home" class="page active">
+ <div class="container">
+  <header>
+   <h1 style="z-index: 3;">Military Clans</h1>
+   <h2 style="z-index: 3;" id="1">Лучший майнкрафт сервер с модами</h2>
+   <h3 style="z-index: 3;">MilitaryClans.aternos.me</h3>
+   <ul class="circles">
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+   </ul>
+  </header>
+  </div>
+  
+  <div class="text-container">
+	<div class="paragraph">
+	<h3>Данный проект был создан на основе и вдохновлённой концепцией военных кланов, существовавших ранее на популярных игровых серверах. Мы стремимся не просто воссоздать, но и возродить ту уникальную атмосферу, которая царила в те времена, когда кланы боролись за влияние, территорию и уважение.</h3>
+	</div>
+	<div class="paragraph">
+	  <h3>Целью данного проекта является максимально точное воспроизведение всех значимых аспектов тех событий, которые происходили на сервере в прошлом, с сохранением духа соперничества, стратегии и кооперации между участниками. Мы хотим дать игрокам возможность вновь пережить те эмоции, которые они испытывали, участвуя в сражениях и строя альянсы.</h3>
+	</div>
+	<div class="paragraph">
+	  <h3>Реализация проекта будет происходить на отдельной серверной платформе, что обеспечит полную свободу в настройке игрового процесса. Для достижения максимального погружения в военную тематику мы планируем использовать набор специализированных модификаций. Эти моды позволят добавить разнообразие в геймплей, расширить арсенал доступного вооружения, улучшить механику боевых действий и в целом создать более реалистичную и захватывающую атмосферу.</h3>
+	</div>
+	  	<div class="paragraph">
+	  <h3>Помимо большого количества различных модов, улучшающих атмосферу и добавляющих различные механики, у нас есть своя карта мира! Её вы можете увидеть чуть ниже</h3>
+  </div>
+	<div class="paragraph">
+	  <h3>Мы уверены, что благодаря продуманному подходу, вниманию к деталям и поддержке сообщества, данный проект сможет не только вернуть интерес к военным кланам, но и открыть новую страницу в их истории</h3>
+  </div>
+  
+  <!-- Обновленный блок с картой -->
+  <div class="map-container">
+    <img src="https://i.ibb.co/QvjXxc6D/IMG-8104.jpg" alt="Карта сервера" class="map-image">
+    <div class="map-overlay">
+    </div>
+  </div>
+  </div>
+  <div class="impinfo-container">
+	<form action="https://discord.gg/3Fz8D85J4q"><button class="impinfo"><h3>Наш Discord</h3></button></form>
+	<form action="https://t.me/sentrogu"><button class="impinfo"><h3>Создатель</h3></button></form>
+	<form action="https://t.me/zom_zom_ziro"><button class="impinfo"><h3>Тех поддержка</h3></button></form>
+  </div> 
+</div>
+<div id="commands" class="page">
+  <div class="container">
+    <h2 style="text-align: center; padding-bottom: 20px; text-decoration: underline; text-decoration-color: #616161">Правила Discord</h2>
+   <h3 style="text-align: center; padding-bottom: 20px; text-decoration: underline; text-decoration-color: #616161">Общие правила поведения</h3>
+   <ul class="rules-list">
+    <li>1.1. Запрещены любые формы оскорблений, унижений и угроз.
+Уважайте друг друга. Недопустимы высказывания, направленные на унижение чести, достоинства, национальности, ориентации, пола, религиозных и других признаков. Также запрещены любые угрозы в адрес участников, даже если они подаются в шутку.</li>
+    <li>1.2. Запрещён флуд и спам.Не засоряйте чат бессмысленными или повторяющимися сообщениями, символами, смайликами, капсом или однотипным контентом. Флуд мешает нормальному общению и восприятию информации.</li>
+    <li>1.3. Недопустим контент жестокого, насильственного и экстремистского характера.Запрещены публикации, содержащие сцены насилия, расчленения, издевательств над людьми или животными, а также любые проявления экстремизма, расизма, ксенофобии и других форм ненависти.</li>
+    <li>1.4. Строго запрещены призывы к самоубийству и самоповреждению.Даже если это выглядит как "шутка" — любые подобные сообщения воспринимаются крайне серьёзно и будут караться максимально строго.</li>
+    <li>1.5. Запрещена коммерческая деятельность.Нельзя рекламировать или продавать товары, услуги, проводить сборы средств, донаты, розыгрыши или иные коммерческие действия без согласования с Владельцем проекта.</li>
+    <li>1.6. Запрещено распространение вредоносных и мошеннических материалов.Это включает вирусы, фишинговые сайты, вредоносные файлы, реферальные ссылки, обман участников или обман с целью получения выгоды.</li>
+    <li>1.7. Запрещён пиар сторонних ресурсов без разрешения.Нельзя рекламировать свои проекты, сайты, каналы, Discord-серверы и прочее без официального одобрения Владельца или Администрации.</li>
+    <li>1.8. Запрещён оффтоп.Оффтоп — это сообщения не по теме канала или обсуждаемого вопроса. Старайтесь соблюдать структуру общения и писать туда, где это уместно. Для свободного общения, если оно разрешено, есть отдельные каналы.</li>
+    <li>1.9. Запрещена неконструктивная критика проекта.Критика допустима, если она подаётся уважительно, с фактами и предложениями. Недопустимы токсичные высказывания, высмеивание проекта, призывы уйти, подрыв репутации или "срач" ради конфликта.</li>
+    <li>1.10. Ограничения на никнеймы.Нельзя использовать ники, содержащие оскорбления, провокации, нечитаемые символы, ники, которые невозможно упомянуть или скопировать. Также запрещены ники, имитирующие администрацию или других участников.</li>
+   </ul>
+
+      <h3 style="text-align: center; padding-bottom: 20px; padding-top: 20px; text-decoration: underline; text-decoration-color: #616161">Правила общения с администрацией</h3>
+   <ul class="rules-list">
+    <li>2.1. Запрещено публичное обсуждение действий модерации.Если вы не согласны с действиями модератора — обратитесь в личные сообщения или через официальный канал для жалоб. Публичные обсуждения, "разборки" и провокации — запрещены.</li>
+    <li>2.2. Споры с модерацией в момент исполнения ими своих обязанностей — недопустимы.При замечании от модератора — сначала выполните его требования, а если не согласны, обжалуйте позже в установленном порядке. Не вступайте в конфликты в чате.</li>
+    <li>2.3. Провокации, сарказм, троллинг и пассивная агрессия в адрес администрации запрещены.Подколы, попытки подловить, высмеивание или провокационные сообщения будут расцениваться как прямое нарушение.</li>
+    <li>2.4. Запрещено обходить наказания.Если вы получили мут, бан или другое наказание — не пытайтесь обойти его через второй аккаунт, VPN или иные обходы. Такие действия приведут к бану всех аккаунтов.</li>
+    <li>2.5. Клевета и ложные обвинения в адрес модерации запрещены.Распространение лжи, искажённой информации или дискредитация администрации без доказательств будет рассматриваться как серьёзное нарушение.</li>
+    <li>2.6. Жалобы должны подаваться в уважительном и конструктивном формате.Сообщайте факты, а не эмоции. Жалобы с угрозами, агрессией или "наездами" рассматриваться не будут.</li>
+   </ul>
+
+  <h2 style="text-align: center; padding-bottom: 20px; text-decoration: underline; text-decoration-color: #616161">Правила сервера</h2>
+  
+  <h3 style="text-align: center; padding-bottom: 20px; padding-top: 20px; text-decoration: underline; text-decoration-color: #616161">Поведение и общение</h3>
+  <ul class="rules-list">
+    <li>1.1 Запрещены любые формы оскорблений, травли, дискриминации, токсичного поведения в текстовом и голосовом чате.</li>
+    <li>1.2 Запрещён спам, флуд, чрезмерный капс и провокации в чате.</li>
+    <li>1.3 Запрещено использование чужих голосов или звуков в чате (voice chat), имитирование или троллинг.</li>
+    <li>1.4 Запрещено использование ника, скина или статусного текста с неуместным/оскорбительным содержанием.</li>
+    <li>1.5 Обсуждение политики, религии и других спорных тем — нежелательно, особенно в агрессивной форме.</li>
+  </ul>
+
+  <h3 style="text-align: center; padding-bottom: 20px; padding-top: 20px; text-decoration: underline; text-decoration-color: #616161">Глобальные правила игры</h3>
+  <ul class="rules-list">
+    <li>2.1 Запрещено использовать любые сторонние программы, скрипты, читы, X-Ray, автокликеры и прочие средства получения преимущества.</li>
+    <li>2.2 Запрещено использовать баги, дюпы, лазейки и эксплойты — вместо этого сообщайте об ошибках администрации.</li>
+    <li>2.3 Запрещено намеренное лагование сервера (создание ферм лагов, бесконечных цепей, спавнеров и пр.)</li>
+    <li>2.4 Игра на нескольких аккаунтах (мультиаккаунтинг) разрешена только с согласия администрации.</li>
+  </ul>
+
+  <h3 style="text-align: center; padding-bottom: 20px; padding-top: 20px; text-decoration: underline; text-decoration-color: #616161">Базы и строительство</h3>
+  <ul class="rules-list">
+    <li>3.1 Внешний вид базы должен соответствовать атмосфере заброшенного мира: приоритет — руины, укреплённые сооружения, остатки цивилизации. Не строить современные "квадратные" дома из алмазных блоков или стеклянных небоскрёбов.</li>
+    <li>3.2 Запрещено строить неприступные, полностью запечатанные, абьюзные базы (например, из бедрока, с полным антигриф-защитным лабиринтом), если это портит баланс.</li>
+    <li>3.3 Максимальный размер базы — по согласованию с администрацией, особенно при заселении вблизи других игроков.</li>
+    <li>3.4 Запрещено "сидеть под чужой базой" (кемперить) и убивать игроков, ловить при выходе, устраивать "дверной ПВП".</li>
+    <li>3.5 Гриферство возможно только вне защищённых зон и должно соответствовать духу мира — рейды, а не разрушение ради разрушения.</li>
+    <li>3.6 Использование лава-кастов, тоннелей под базами и аналогичных тактик для обхода защиты — запрещено.</li>
+  </ul>
+
+  <h3 style="text-align: center; padding-bottom: 20px; padding-top: 20px; text-decoration: underline; text-decoration-color: #616161">Взаимодействие и PvP</h3>
+  <ul class="rules-list">
+    <li>4.1 ПВП разрешено, но не превращать сервер в арену для хаотичных убийств: нападение без причины на новичков — недопустимо.</li>
+    <li>4.2 Запрещено "фармить" игроков: охотиться на одного и того же игрока без перерыва, мешая ему играть.</li>
+    <li>4.3 Запрещено заставлять игроков вступать в кланы или альянсы против их воли.</li>
+    <li>4.4 Разрешено мстить, если это часть ролевого конфликта, но в пределах разумного.</li>
+    <li>4.5 Использование капканов, ловушек и растяжек — разрешено, но они не должны спамиться и лагать сервер.</li>
+  </ul>
+
+  <h3 style="text-align: center; padding-bottom: 20px; padding-top: 20px; text-decoration: underline; text-decoration-color: #616161">Технические игровые правила</h3>
+  <ul class="rules-list">
+    <li>5.1 Использование модов, дающих преимущество (JourneyMap с X-Ray, Baritone, и т.д.) — запрещено.</li>
+    <li>5.2 Не размещать чрезмерные структуры из работающих механизмов (например, 20 автопечек), если они нагружают сервер.</li>
+  </ul>
+
+  <h3 style="text-align: center; padding-bottom: 20px; padding-top: 20px; text-decoration: underline; text-decoration-color: #616161">Игровая этика и лор</h3>
+  <ul class="rules-list">
+    <li>6.1 Сервер следует атмосфере постапокалипсиса: старайтесь придерживаться стиля выживания, крафта, разрушений, дефицита ресурсов.</li>
+    <li>6.2 Игроки поощряются к созданию баз, фракций, убежищ и торговых зон в духе мира после катастрофы.</li>
+    <li>6.3 Использование фраз, построек, предметов, выпадающих из сеттинга (современных танков, стеклянных дворцов, дискотек и т.д.) — не приветствуется.</li>
+    <li>6.4 Стройте, воюйте и торгуйте — но в первую очередь создавайте атмосферу выживания, а не просто "фарм и ПВП".</li>
+  </ul>
+
+    <h3 style="text-align: center; padding-bottom: 20px; padding-top: 20px; text-decoration: underline; text-decoration-color: #616161">Дополнение</h3>
+    <ul class="rules-list">
+      <li>7.1 Администрация имеет право наказать игрока за действия, не описанные в правилах, если они нарушают дух честной игры и атмосферу проекта.</li>
+      <li>7.2 Незнание правил не освобождает от ответственности.</li>
+      <li>7.3 При нарушениях выносится устное предупреждение, затем — кик, мут, бан, в зависимости от ситуации.</li>
+    </ul>
+    
+    <h4 style="padding-top: 20px; text-align: center; color: #616161;">Незнание правил не освобождает от ответственности. Нарушения могут привести к предупреждению, ограничению функционала или удалению с проекта. Администрация имеет право принимать меры по ситуации, даже если она не прописана напрямую в правилах.</h4>
+  </div> <!-- Этот закрывающий тег должен быть ПОСЛЕ всех правил -->
+</div> <!-- Закрывающий тег для #commands -->
+  
+<div id="donate" class="page">
+  <div class="container">
+   <h3 style="text-align: center; padding-bottom: 20px; text-decoration-color: #616161">Здесь вы можете скачать все моды, необходимые для игры на нашем сервере, нажав на кнопчку ниже. Приятной игры!</h3>
+	<div class="guide-text">
+	  <span>Вот небольшой гайд по установке модов:</span><br><br>
+	  1. Скачиваете сами моды по кнопочке снизу. Убедитесь, что вы скачали все моды.<br>
+	  2. Открываем Zip-файл с нашими модами. <br>
+	  3. Открываем файл .minecraft -> mods <br>
+	  4. Перекидываем туда наши моды<br>
+	  5. Запускаем майнкрафт на версии 1.20.1 Forge и заходим на сервер
+	</div>
+  <div class="impinfo-container1">
+	<form action="https://drive.google.com/drive/folders/1XfUxXvZu853eq9fnWlmNWfiA3G4-jAFn?usp=drive_link"><button class="impinfo"><h3>Скачать сборку</h3></button></form>
+  </div>
+</div>
+   <h3 style="text-align: center; padding-bottom: 20px; text-decoration: underline; text-decoration-color: #616161">Описание всех модов</h3>
+   <ul class="rules-list" style="text-align: center;">
+   <li>SecurityCraft<br>
+Описание : Добавляет различные системы безопасности: камеры, лазеры, дверные замки и многое другое.<br>
+Функционал : Позволяет защищать свои постройки от грабителей и вандалов.</li>
+   <li>AntiPortals<br>
+Описание : Запрещает использование порталом для перемещения между измерениями.<br>
+Функционал : Используется на серверах для контроля доступа к Нижнему миру или Энду.</li>
+   <li>Architecture Mod<br>
+Описание : Библиотека<br>
+Функционал : Для других</li>
+   <li>Backpacked<br>
+Описание : Добавляет рюкзаки, которые увеличивают объём инвентаря игрока.<br>
+Функционал : Позволяет брать больше предметов без использования сундуков.</li>
+   <li>Bad Mobs<br>
+Описание : Мод для кастомного спавна мобов<br>
+Функционал : Позволяет убирать ненужных мобов</li>
+   <li>Camera Overhaul<br>
+Описание : Полностью перерабатывает систему камеры в игре.<br>
+Функционал : Добавляет новые режимы, стабилизацию и более реалистичное поведение камеры.</li>
+   <li>Cloth Config API<br>
+Описание : Библиотека для создания настроек в других модах.<br>
+Функционал : Обеспечивает удобный интерфейс для изменения параметров модов.</li>
+   <li>Corpse<br>
+Описание : После смерти игрок оставляет тело, которое можно обыскать.<br>
+Функционал : Добавляет реализм и интересную механику возвращения к месту смерти.</li>
+   <li>CreativeCore<br>
+Описание : Утилитная библиотека с улучшениями для креативного режима.
+Функционал : Повышает удобство работы в режиме "Креатив".</li>
+   <li>Cull Leaves<br>
+Описание : Оптимизирует прорисовку листьев для лучшей производительности.<br>
+Функционал : Увеличивает FPS в лесных и горных регионах.</li>
+   <li>Curious Forge<br>
+Описание : Добавляет новые рецепты и механики взаимодействия с миром.<br>
+Функционал : Расширяет возможности крафта и исследования.</li>
+   <li>Dynamic FPS<br>
+Описание : Автоматически регулирует частоту кадров в зависимости от активности.<br>
+Функционал : Стабилизирует производительность игры.</li>
+   <li>Embeddium<br>
+Описание : Мод, добавляющий новые настройки для графики<br>
+Функционал : Улучшает FPS и производительность</li>
+   <li>Entity Culling<br>
+Описание : Отключает отрисовку мобов и объектов вне видимости игрока.<br>
+Функционал : Повышает производительность, особенно на больших картах.</li>
+   <li>FerriteCore<br>
+Описание : Лёгкая библиотека для оптимизации и поддержки других модов.<br>
+Функционал : Улучшает совместимость и снижает нагрузку на систему.</li>
+   <li>First Aid<br>
+Описание : Добавляет систему лечения ран и травм.<br>
+Функционал : Игрок может получить «тяжёлое» повреждение и нуждается в лечении.</li>
+   <li>Framework<br>
+Описание : Библиотека для разработчиков модов.<br>
+Функционал : Не влияет напрямую на игровой процесс, но необходим для некоторых модов.</li>
+   <li>FTB Chunks<br>
+Описание : Система защиты территорий и управления чанками.<br>
+Функционал : Позволяет захватывать и защищать участки земли.</li>
+   <li>FTB Library<br>
+Описание : Библиотека, поддерживающая другие моды от FTB.<br>
+Функционал : Техническая основа для других модов.</li>
+   <li>FTB Ranks<br>
+Описание : Система ролей и прав на сервере.<br>
+Функционал : Позволяет администраторам настраивать доступ игроков.</li>
+   <li>FTB Teams<br>
+Описание : Система команд и общих целей для игроков.<br>
+Функционал : Упрощает кооперативную игру на сервере.</li>
+   <li>GeckoLib<br>
+Описание : Библиотека для анимаций мобов.<br>
+Функционал : Поддерживает другие моды для анимаций</li>
+   <li>Immersive Aircraft<br>
+Описание : Добавляет самолёты и авиацию в Minecraft.<br>
+Функционал : Можно строить и летать на различных типах летательных аппаратов.</li>
+   <li>JEI (Just Enough Items)<br>
+Описание : Самый популярный мод для просмотра рецептов крафта.<br>
+Функционал : Показывает все возможные рецепты и помогает находить предметы.</li>
+   <li>Kxysis<br>
+Описание : Мод, добавляющий новые материалы и технологические элементы. Функционал : Расширяет возможности крафта и развития в игре.<br></li>
+   <li> Lightmancy<br>
+Описание : Мод с новыми источниками света и системой освещения.<br>
+Функционал : Позволяет создавать красивые и функциональные системы освещения.</li>
+   <li>Marbled's API<br>
+Описание : Библиотека для текстур и визуальных эффектов.<br>
+Функционал : Техническая поддержка для других модов.</li>
+   <li>Marbled’s Arsenal<br>
+Описание : Добавляет новое оружие и защитное снаряжение.<br>
+Функционал : Расширяет боевую систему и тактики боя.</li>
+   <li>MCore<br>
+Описание : Библиотека, используемая другими модами.<br>
+Функционал : Обеспечивает работу дополнительных функций и расширений.</li>
+   <li>Memory Leak Fix<br>
+Описание : Исправляет утечки памяти в Minecraft.<br>
+Функционал : Увеличивает стабильность игры, особенно при длительном запуске.</li>
+   <li>MidnightLib<br> 
+Описание : Библиотека для других модов, часто используется в тематических модпаках.<br>
+Функционал : Не имеет собственных функций, но важна для работы других модов.</li>
+   <li>Oculus<br>
+Описание : Добавляет шейдеры<br>
+Функционал : Позволяет использовать шейдеры Optifine</li>
+   <li>Player Animation Library<br>
+Описание : Библиотека анимаций для игроков.<br>
+Функционал : Поддерживает моды, добавляющие движения, жесты и действия.</li>
+   <li>Player Revive<br>
+Описание : Добавляет систему воскрешения после смерти.<br>
+Функционал : Игрок может быть восстановлен с помощью специального предмета.</li>
+   <li>Refurbished Furniture<br>
+Описание : Добавляет новую мебель и интерьерные предметы.<br>
+Функционал : Улучшает оформление домов и баз.</li>
+   <li>Snatched<br>
+Описание : Добавляет возможность красть предметы у других игроков.<br>
+Функционал : Интересная PvP-механика и система воровства.</li>
+   <li>Starlight<br>
+Описание : Оптимизация освещения и генерации света.<br>
+Функционал : Ускоряет загрузку света в мире и уменьшает нагрузку на GPU.</li>
+   <li>Super Warfare<br>
+Описание : Мод, добавляющий военные технологии и оружие.<br>
+Функционал : Позволяет участвовать в масштабных битвах и использовать мощное оружие.</li>
+   <li>Tacz<br>
+Описание : Добавляет огнестрельные оружие<br>
+Функционал : Расширяет возможности военного арсенала</li>
+  </ul>
+</div>
+<div id="clans" class="page">
+  <div class="container">
+	<h3 style="text-align: center; padding-bottom: 20px; text-decoration: underline; text-decoration-color: #616161">Список кланов на сервере</h3>
+	
+	<div class="clans-container">
+	  <div class="clan-card">
+		<div class="clan-name">СПЕКТР</div>
+		<div class="clan-info">СПЕКТР — один из старейших военных кланов, чья база раскинулась на холодной и безлюдной равнине за пределами разрушенного мегаполиса. Здесь, среди серого неба, сухого ветра и редких остатков инфраструктуры, клан построил укреплённый лагерь, окружённый башнями наблюдения и прожекторами. Их символ — тень в свете костра, невидимая, но всегда рядом. Молчаливые и собранные, члены СПЕКТРА держат дистанцию от других и редко вступают в разговоры, предпочитая говорить действиями. Их флаги никогда не колышутся напрасно, а стены лагеря будто смотрят обратно.</div>
+		<div class="clan-leader">Лидер: 0M0H_45</div>
+	  </div>
+	  
+	  <div class="clan-card">
+		<div class="clan-name">ЛЕГИОН</div>
+		<div class="clan-info">Военный клан ЛЕГИОН расположен на юго-западе города у железнодорожной станции. Это высокоорганизованная группа, состоящая из ветеранов, которая контролирует важный транспортный узел для обеспечения безопасности и ресурсов. База клана — укреплённое депо с оборонительными линиями, где изготавливаются оружие, броня и лечат раненых. Основная цель ЛЕГИОНА — выживание и восстановление порядка в разрушенном мире, защищая свои территории от зомби и враждебных групп.</div>
+		<div class="clan-leader">Лидер: DaMidar</div>
+	  </div>
+	  
+	  <div class="clan-card">
+		<div class="clan-name">ФРОНТ</div>
+		<div class="clan-info">Клан ФРОНТ базируется на северо-востоке города у радиовышки. Это независимая группа выживших, использующая партизанскую тактику и внезапные атаки. Вышка служит им как наблюдательный пункт и средство связи. ФРОНТ избегает прямых конфликтов, ценит свободу и действует скрытно, защищая свою территорию и автономию.</div>
+		<div class="clan-leader">Лидер: CheiLogIs</div>
+	  </div>
+	</div>
+</div>
+
+<script>
+   // Функция для переключения страниц
+   function showPage(pageId) {
+	 // Скрываем все страницы
+	 const pages = document.querySelectorAll('.page');
+	 pages.forEach(page => {
+	   page.classList.remove('active');
+	 });
+
+	 // Показываем только выбранную страницу
+	 const activePage = document.getElementById(pageId);
+	 activePage.classList.add('active');
+	 
+	 // Сбрасываем анимацию для всех элементов (кроме кнопки скачивания)
+	 const elements = document.querySelectorAll('.paragraph, .rules-list li');
+	 elements.forEach(el => el.classList.remove('visible'));
+	 
+	 // Запускаем проверку видимости с небольшой задержкой
+	 setTimeout(checkVisibility, 100);
+   }
+
+   // Анимация для заголовков
+   const fadeIns = document.querySelectorAll('.fade-in');
+   fadeIns.forEach((fadeIn, index) => {
+	 setTimeout(() => {
+	   fadeIn.classList.add('visible');
+	 }, 300 * index);
+   });
+   
+	// Анимация дождя
+	function createRaindrop() {
+	  let drop = document.createElement("div");
+	  drop.classList.add("raindrop");
+	  document.body.appendChild(drop);
+	  
+	  drop.style.left = Math.random() * window.innerWidth + "px";
+	  drop.style.top = "-20px";
+	  drop.style.animationDuration = (Math.random() * 3 + 2) + "s";
+
+	  setTimeout(() => { drop.remove(); }, 5000);
+	}
+	setInterval(createRaindrop, 100);
+
+	// Функция для проверки видимости элементов (кроме кнопки скачивания)
+	function checkVisibility() {
+	  const elements = document.querySelectorAll('.paragraph, .rules-list li');
+	  const windowHeight = window.innerHeight;
+	  const triggerBottom = windowHeight * 0.8;
+
+	  elements.forEach(element => {
+		const elementTop = element.getBoundingClientRect().top;
+		
+		if (elementTop < triggerBottom) {
+		  element.classList.add('visible');
+		}
+	  });
+	}
+
+	// Обработчики событий
+	window.addEventListener('scroll', checkVisibility);
+	window.addEventListener('resize', checkVisibility);
+
+	// Проверяем видимость при загрузке страницы
+	document.addEventListener('DOMContentLoaded', function() {
+	  checkVisibility();
+	});
+</script>
+</body>
+</html>
